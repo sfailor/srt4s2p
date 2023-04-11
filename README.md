@@ -1,6 +1,6 @@
-# Semi-supervised ROI tracking for Suite2p (srt4s2p)
+# Semi-supervised ROI tracking for suite2p (srt4s2p)
 
-A python toolbox for tracking ROIs between suite2p processed two-photon calcium imaging experiments.<br>
+A python toolbox for tracking ROIs between <a href="https://github.com/MouseLand/suite2p">suite2p</a> processed two-photon calcium imaging experiments.<br>
 
 Features:<br>
 - Manual selection of matching ROIs<br>
