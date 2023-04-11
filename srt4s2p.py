@@ -373,7 +373,7 @@ class Compare2p():
                 if comp_key not in self.comparisons.keys():
                     raise ValueError('Comparison between recordings has not been made!')
                 elif 'M' not in self.comparisons[comp_key]:
-                    raise ValueError('Calculate transform matrix M before attempting transformations. To do this run method add_transform_matrix for your comparison')
+                    raise ValueError(f'Calculate transform matrix M before attempting transformations. To do this run find_transform({ids})')
                 
                 ops = [self.recordings[i][p]['ops'] for i,p in zip(i_key,pk)]
                 stat = [self.recordings[i][p]['stat'] for i,p in zip(i_key,pk)]
