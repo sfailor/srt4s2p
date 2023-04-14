@@ -241,7 +241,7 @@ class Compare2p():
                                                             'true_match' : np.ones(len(rois)).astype(bool)})], ignore_index=True)
                 
             # Remove duplicate matches
-            df_pair = self.clean_matches(df_pair,f'rois_{i_key[0]}')
+            df_pair = self.clean_matches(df_pair)
             
             if len(df_matches) == 0:
                 df_matches = pd.concat([df_matches,df_pair])
@@ -310,7 +310,7 @@ class Compare2p():
         key = (tuple(i for i in ids),tuple(p for p in planes))
         if (tuple(ids),tuple(planes)) in self.comparisons.keys():
             if 'M' not in self.comparisons[key]:
-                raise ValueError('Calculate transform matrix M before attempting transformations. To do this run method add_transform_matrix for your comparison')
+                raise ValueError(f'Calculate transform matrix M before attempting transformations. To do this run find_transform({ids})')
             
             if image.lower() == 'roi' or image.lower() == 'rois':
                 ref,_ = self.make_roi_map(self.recordings[ids[0]][planes[0]]['stat'],
@@ -343,8 +343,15 @@ class Compare2p():
         
         f,a = plt.subplots(1,3)
         a[0].imshow(ref)
+        a[0].set_title(ids[0])
         a[1].imshow(other_trans)
+        a[1].set_title(f'{ids[1]} transformed')
         a[2].imshow(other)
+        a[2].set_title(f'{ids[1]} original')
+    
+        for a in a.flatten():
+            a.set_xticks([])
+            a.set_yticks([])
     
     def find_overlapping_rois(self,ids,planes='all',threshold=0.6):
         
@@ -401,7 +408,7 @@ class Compare2p():
                                                             'true_match' : true_match})], ignore_index=True)
             
             # Remove duplicate matches
-            df_pair = self.clean_matches(df_pair,f'rois_{i_key[0]}')
+            df_pair = self.clean_matches(df_pair)
         
             if len(df_matches) == 0:
                 df_matches = pd.concat([df_matches,df_pair])
@@ -717,8 +724,6 @@ class Compare2p():
                 mask2 = roi_map_2==best_r2
                 overlap = np.sum(mask1*mask2)/np.max([np.sum(mask1),np.sum(mask2)]) # Overlap as proportion of the largest ROI
                 if overlap > threshold:
-                    if best_r2 == 1:
-                        print(r1,best_r2)
                     overlapping_rois.append([r1-1,best_r2-1]) # Change back to zero-based indexing so it aligns with stat.npy
                     overlap_prop.append(overlap)
 
@@ -729,14 +734,18 @@ class Compare2p():
     
     @staticmethod
     def clean_matches(df):
-        # Remove any possible duplicates
+        # Remove any duplicates
         df.drop_duplicates(inplace=True)
-        # If more than one ROI is matching with a reference ROI (e.g. ROI A overlaps with ROI B in plane 2 and ROI C in plane 3), keep the matching ROI with the largest overlap
-        ref_col = df.columns[0]
-        mask = df.duplicated(subset=ref_col, keep=False)
-        duplicates = df[mask]
-        max_ind = [duplicates.loc[duplicates[ref_col]==r,'overlap'].idxmax() for r in duplicates[ref_col].unique()]
-        df = pd.concat([df[~mask],duplicates.loc[max_ind]], ignore_index=True)
+        
+        # Find any cases where an ROI has been matched more than once, and keep the match with the largest overlap
+        n_recordings = int((df.shape[1]-1)/2) # Number of recordings in the df. There is an roi and plane column for each recording.
+        
+        for n in range(n_recordings):
+            ref_cols = df.columns[[n,n+n_recordings]] # roi and plane column names
+            mask = df.duplicated(subset=ref_cols, keep=False)
+            duplicates = df[mask]
+            max_ind = [duplicates.loc[np.all(duplicates[ref_cols]==r,axis=1),'overlap'].idxmax() for _,r in duplicates[ref_cols].drop_duplicates().iterrows()]
+            df = pd.concat([df[~mask],duplicates.loc[max_ind]], ignore_index=True)
         
         return df
               
