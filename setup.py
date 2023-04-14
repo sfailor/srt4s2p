@@ -1,4 +1,4 @@
-from setuptools import setup
+from setuptools import setup, find_packages
 
 setup(
     name='srt4s2p',
@@ -16,10 +16,11 @@ setup(
                             'scipy',
                             'matplotlib'                           
                         ],
+    packages = find_packages(),
     classifiers=[
-        "Programming Language :: Python :: 3",
-        "License :: OSI Approved :: GNU General Public License v3 (GPLv3)",
-        "Operating System :: OS Independent",
-    ],
+                    "Programming Language :: Python :: 3",
+                    "License :: OSI Approved :: GNU General Public License v3 (GPLv3)",
+                     "Operating System :: OS Independent",
+                ],
 )
 
