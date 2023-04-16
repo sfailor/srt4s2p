@@ -3,9 +3,9 @@
 A python toolbox for tracking ROIs between <a href="https://github.com/MouseLand/suite2p">suite2p</a> processed two-photon calcium imaging experiments.<br>
 
 Features:<br>
-- Manual selection of matching ROIs<br>
+- Manual and automatic identification of matching ROIs<br>
 - Projective or similarity transformations for plane alignment<br>
-- Alignment of an arbitrary number of planes to a reference plane (e.g., when ROIs in a reference plane are split across two or more planes in a subsequent recording)<br>
+- Alignment of an arbitrary number of planes to a reference plane (e.g., when ROIs in a reference plane are split across two or more planes in a subsequent recording) with conflicting ROI matches resolved automatically.<br>
 - ROI match curation<br>
 
 Requires:<br>
