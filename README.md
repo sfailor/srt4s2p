@@ -16,5 +16,16 @@ scipy<br>
 matplotlib<br>
 <a href="https://www.pyqtgraph.org/">pyqtgraph</a><br>
 <a href="https://pypi.org/project/PyQt5/">PyQT5</a><br>
-<br>
-Inspired by <a href="https://github.com/ransona/ROIMatchPub">ROIMatchPub</a><br>
+
+
+
+## Feature/ROI selection
+
+https://user-images.githubusercontent.com/15325939/232312635-e4278c50-e28a-4fbf-9a0b-161dc14f12ec.mp4 
+
+
+## ROI match curation
+
+https://user-images.githubusercontent.com/15325939/232312750-ec15e66f-a2a4-45b6-a6dc-06d2422dd02b.mp4 
+
+<br><br>Inspired by <a href="https://github.com/ransona/ROIMatchPub">ROIMatchPub</a>
