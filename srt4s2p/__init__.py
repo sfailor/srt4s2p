@@ -738,15 +738,12 @@ class Compare2p():
         df.drop_duplicates(inplace=True)
         
         # Find any cases where an ROI has been matched more than once, and keep the match with the largest overlap
-        n_recordings = int((df.shape[1]-1)/2) # Number of recordings in the df. There is an roi and plane column for each recording.
+        n_columns = int(df.shape[1]-2) # Number of columns corresponding to roi and plane number
         
-        for n in range(n_recordings):
-            ref_cols = df.columns[[n,n+n_recordings]] # roi and plane column names
-            mask = df.duplicated(subset=ref_cols, keep=False)
-            duplicates = df[mask]
-            max_ind = [duplicates.loc[np.all(duplicates[ref_cols]==r,axis=1),'overlap'].idxmax() for _,r in duplicates[ref_cols].drop_duplicates().iterrows()]
-            df = pd.concat([df[~mask],duplicates.loc[max_ind]], ignore_index=True)
-        
+        for n in range(0 ,n_columns, 2):
+            
+            df = df.sort_values('overlap').drop_duplicates(df.columns[[n,n+1]], keep='last', ignore_index=True)
+            
         return df
               
 class ROIView(pg.GraphicsLayoutWidget):
