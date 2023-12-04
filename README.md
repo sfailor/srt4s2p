@@ -20,11 +20,10 @@ matplotlib<br>
 
 ## Feature/ROI selection
 
-https://user-images.githubusercontent.com/15325939/232312635-e4278c50-e28a-4fbf-9a0b-161dc14f12ec.mp4 
-
+https://github.com/sfailor/srt4s2p/assets/15325939/a2c99ede-f8e1-4eeb-8060-8ad9759de1ea
 
 ## ROI match curation
 
-https://user-images.githubusercontent.com/15325939/232312750-ec15e66f-a2a4-45b6-a6dc-06d2422dd02b.mp4 
+https://github.com/sfailor/srt4s2p/assets/15325939/332a01f2-9a18-473a-adf7-5905c3e42ac7
 
 <br><br>Inspired by <a href="https://github.com/ransona/ROIMatchPub">ROIMatchPub</a>
